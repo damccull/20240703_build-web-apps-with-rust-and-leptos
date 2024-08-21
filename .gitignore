@@ -5,3 +5,4 @@ dist
 *.sqlite-shm
 *.sqlite-wal
 temp.txt
+.sass-cache
