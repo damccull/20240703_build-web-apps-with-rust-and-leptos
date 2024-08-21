@@ -13,17 +13,15 @@ pub fn App() -> impl IntoView {
         <Stylesheet id="leptos" href="/pkg/tools-app.css"/>
 
         // sets the document title
-        <Title text="Welcome to Leptos"/>
+        <Title text="Welcome to Tools App"/>
 
-        // content for this welcome page
-        <Router>
-            <main>
-                <Routes>
-                    <Route path="" view=HomePage/>
-                    <Route path="/*any" view=NotFound/>
-                </Routes>
-            </main>
-        </Router>
+        <Container>
+            <PageHeader/>
+            <NavBar/>
+            <Content/>
+            <SideBar/>
+            <PageFooter/>
+        </Container>
     }
 }
 
@@ -35,8 +33,79 @@ fn HomePage() -> impl IntoView {
     let on_click = move |_| set_count.update(|count| *count += 1);
 
     view! {
-        <h1>"Welcome to Leptos!"</h1>
+        <h1>"Welcome to Tools App!"</h1>
         <button on:click=on_click>"Click Me: " {count}</button>
+    }
+}
+
+#[component]
+pub fn Container(children: Children) -> impl IntoView {
+    view! {
+        <div class="container">
+            {children()}
+        </div>
+    }
+}
+
+#[component]
+pub fn PageHeader() -> impl IntoView {
+    view! {
+        <header id="page-header">
+            <h1>"Tools App"</h1>
+        </header>
+    }
+}
+
+#[component]
+pub fn NavBar() -> impl IntoView {
+    view! {
+        <nav id="main-menu">
+            <ul>
+                <li class="menu-item">
+                    <a href="/">"Home"</a>
+                </li>
+                //<li class="menu-item">
+                //    <a href="/parent-child">"Parent Child"</a>
+                //</li>
+                //<li class="menu-item">
+                //    <a href="/color-tool">"Color Tool"</a>
+                //</li>
+                //<li class="menu-item">
+                //    <a href="/car-tool">"Car Home"</a>
+                //</li>
+            </ul>
+        </nav>
+    }
+}
+
+#[component]
+pub fn SideBar() -> impl IntoView {
+    view! {
+        <aside id="sidebar">Sidebar</aside>
+    }
+}
+
+#[component]
+pub fn Content() -> impl IntoView {
+    view! {
+        // content for this welcome page
+        <Router>
+            <main id="content">
+                <Routes>
+                    <Route path="" view=HomePage/>
+                    <Route path="/*any" view=NotFound/>
+                </Routes>
+            </main>
+        </Router>
+    }
+}
+
+#[component]
+pub fn PageFooter() -> impl IntoView {
+    view! {
+        <footer id="page-footer">
+            <p>"© 2024 Training 4 Programmers LLC"</p>
+        </footer>
     }
 }
 
