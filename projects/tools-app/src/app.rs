@@ -2,6 +2,8 @@ use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
 
+use crate::components::parent_child::ParentChildHome;
+
 #[component]
 pub fn App() -> impl IntoView {
     // Provides context that manages stylesheets, titles, meta tags, etc.
@@ -22,6 +24,26 @@ pub fn App() -> impl IntoView {
             <SideBar/>
             <PageFooter/>
         </Container>
+    }
+}
+
+#[component]
+pub fn Content() -> impl IntoView {
+    view! {
+        // content for this welcome page
+        <Router>
+            <main id="content">
+                <Routes>
+                    <Route path="" view=HomePage/>
+                    <Route path="/parent-child" view=ParentChildHome>
+                        <Route path="" view=|| view! {
+                            <p>"Click an example link."</p>
+                        }/>
+                    </Route>
+                    <Route path="/*any" view=NotFound/>
+                </Routes>
+            </main>
+        </Router>
     }
 }
 
@@ -64,9 +86,9 @@ pub fn NavBar() -> impl IntoView {
                 <li class="menu-item">
                     <a href="/">"Home"</a>
                 </li>
-                //<li class="menu-item">
-                //    <a href="/parent-child">"Parent Child"</a>
-                //</li>
+                <li class="menu-item">
+                    <a href="/parent-child">"Parent Child"</a>
+                </li>
                 //<li class="menu-item">
                 //    <a href="/color-tool">"Color Tool"</a>
                 //</li>
@@ -82,21 +104,6 @@ pub fn NavBar() -> impl IntoView {
 pub fn SideBar() -> impl IntoView {
     view! {
         <aside id="sidebar">Sidebar</aside>
-    }
-}
-
-#[component]
-pub fn Content() -> impl IntoView {
-    view! {
-        // content for this welcome page
-        <Router>
-            <main id="content">
-                <Routes>
-                    <Route path="" view=HomePage/>
-                    <Route path="/*any" view=NotFound/>
-                </Routes>
-            </main>
-        </Router>
     }
 }
 
