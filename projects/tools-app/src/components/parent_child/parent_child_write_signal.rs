@@ -2,16 +2,16 @@ use leptos::*;
 
 #[component]
 pub fn ChildWriteSignal(counter: ReadSignal<i32>, set_counter: WriteSignal<i32>) -> impl IntoView {
-    let increment_counter = move |_| set_counter.update(|c| *c += 1);
-    let decrement_counter = move |_| set_counter.update(|c| *c -= 1);
+    let increment_counter = move |_| set_counter.update(|c| *c += 2);
+    let decrement_counter = move |_| set_counter.update(|c| *c -= 2);
     view! {
         <div>
             <div style="border: 1px solid black; margin: 4px;">
                 <h3>"Child Write Signal"</h3>
                 <p>"Counter: " {counter}</p>
                 <div>
-                    <button type="button" on:click=increment_counter>"Child +1"</button>
-                    <button type="button" on:click=decrement_counter>"Child -1"</button>
+                    <button type="button" on:click=increment_counter>"Child +2"</button>
+                    <button type="button" on:click=decrement_counter>"Child -2"</button>
                 </div>
             </div>
         </div>
