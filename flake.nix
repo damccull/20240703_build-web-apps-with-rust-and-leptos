@@ -75,6 +75,7 @@
             ))
             panamax
             sass
+            sqlx-cli
             tailwindcss
             trunk
           ];
