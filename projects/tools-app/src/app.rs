@@ -2,8 +2,9 @@ use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
 
-use crate::components::parent_child::{
-    ParentChildCallback, ParentChildClosure, ParentChildHome, ParentWriteSignal,
+use crate::components::{
+    color_tool::color_home::ColorHome,
+    parent_child::{ParentChildCallback, ParentChildClosure, ParentChildHome, ParentWriteSignal},
 };
 
 #[component]
@@ -44,6 +45,8 @@ pub fn Content() -> impl IntoView {
                         <Route path="" view=|| view! {
                             <p>"Click an example link."</p>
                         }/>
+                    </Route>
+                    <Route path="/color-tool" view=ColorHome>
                     </Route>
                     <Route path="/*any" view=NotFound/>
                 </Routes>
@@ -94,9 +97,9 @@ pub fn NavBar() -> impl IntoView {
                 <li class="menu-item">
                     <a href="/parent-child">"Parent Child"</a>
                 </li>
-                //<li class="menu-item">
-                //    <a href="/color-tool">"Color Tool"</a>
-                //</li>
+                <li class="menu-item">
+                    <a href="/color-tool">"Color Tool"</a>
+                </li>
                 //<li class="menu-item">
                 //    <a href="/car-tool">"Car Home"</a>
                 //</li>
