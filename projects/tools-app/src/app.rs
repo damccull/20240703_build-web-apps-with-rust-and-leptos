@@ -2,7 +2,7 @@ use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
 
-use crate::components::parent_child::ParentChildHome;
+use crate::components::parent_child::{ParentChildHome, ParentWriteSignal};
 
 #[component]
 pub fn App() -> impl IntoView {
@@ -36,6 +36,7 @@ pub fn Content() -> impl IntoView {
                 <Routes>
                     <Route path="" view=HomePage/>
                     <Route path="/parent-child" view=ParentChildHome>
+                        <Route path="write-signal" view=ParentWriteSignal/>
                         <Route path="" view=|| view! {
                             <p>"Click an example link."</p>
                         }/>
