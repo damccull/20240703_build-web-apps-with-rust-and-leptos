@@ -1,3 +1,5 @@
+use std::io;
+
 #[cfg(feature = "ssr")]
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -5,6 +7,7 @@ async fn main() -> std::io::Result<()> {
     use actix_web::*;
     use leptos::*;
     use leptos_actix::{generate_route_list, LeptosRoutes};
+    use sqlx::{migrate, sqlite::SqlitePoolOptions};
     use tools_app::app::*;
 
     let conf = get_configuration(None).await.unwrap();
@@ -13,11 +16,27 @@ async fn main() -> std::io::Result<()> {
     let routes = generate_route_list(App);
     println!("listening on http://{}", &addr);
 
+    let db_pool = SqlitePoolOptions::new()
+        .connect("sqlite://./toolsapp.sqlite")
+        .await
+        .map_err(|e| io::Error::new(io::ErrorKind::Other, e))?;
+
+    migrate!("./migrations")
+        .run(&db_pool)
+        .await
+        .unwrap_or_else(|_| {
+            panic!(
+                "could not run sqlx migration {}",
+                whoami::username().as_str()
+            )
+        });
+
     HttpServer::new(move || {
         let leptos_options = &conf.leptos_options;
         let site_root = &leptos_options.site_root;
 
         App::new()
+            .app_data(web::Data::new(db_pool.clone()))
             // serve JS/WASM/CSS from `pkg`
             .service(Files::new("/pkg", format!("{site_root}/pkg")))
             // serve other assets from the `assets` directory
